@@ -19,8 +19,8 @@ const CreateTask = () => {
                         <input className='text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-400 mb-4' type='text' placeholder='Employee name' />
                     </div>
                     <div>
-                        <h3>Category</h3>
-                        <input type='text' placeholder='Design, dev, etc' />
+                        <h3 className='text-sm text-gray-300 mb-0.5'>Category</h3>
+                        <input className='text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-400 mb-4' type='text' placeholder='Design, dev, etc' />
                     </div>
                 </div>
                 {/* Task */}

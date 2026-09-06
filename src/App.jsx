@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Login from './components/Auth/Login'
 import EmployeeDashboard from './components/Dashboard/EmployeeDashboard'
 import AdminDashboard from './components/Dashboard/AdminDashboard'
+import { setLocalStorage } from './utils/localStorage'
 
 const App = () => {
+
+  const [first, setfirst] = useState(second)
+  
   return (
     <>
     {/* <Login /> */}
