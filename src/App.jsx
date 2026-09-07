@@ -24,7 +24,7 @@ const App = () => {
 
   const handleLogin = (email, password) => {
     if (email == 'admin@me.com' && password == '123') {
-      setUser({ role: 'admin' })
+      setUser('admin')
       localStorage.setItem('loggedInUser', JSON.stringify({ role: 'admin' }))
     } else if (authData) {
       const employee = authData.employees.find((e) => email == e.email && e.password == password)
