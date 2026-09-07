@@ -1,44 +1,26 @@
 import React from 'react'
+import AcceptTask from './AcceptTask'
+import NewTask from './NewTask'
+import CompleteTask from './CompleteTask'
+import FailedTask from './FailedTask'
 
-const TaskList = () => {
+const TaskList = ({ data }) => {
   return (
     <div id='tasklist' className='h-[50%] overflow-x-auto flex items-center justify-start gap-5 flex-nowrap py-5 w-full mt-10'>
-      <div className='shrink-0 h-full w-[300px] p-5 bg-yellow-400 rounded-xl'>
-        <div className='flex justify-between items-center'>
-          <h3 className='bg-red-600 text-sm px-3 py-1 rounded'>High</h3>
-          <h4 className='text-sm'>20 feb 2024</h4>
-        </div>
-        <h2 className='mt-5 text-2xl font-semibold'>Make a yt vdo</h2>
-        <p className='text-sm mt-3'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea, sit.</p>
-
-      </div>
-      <div className='shrink-0 h-full w-[300px] p-5 bg-yellow-400 rounded-xl'>
-        <div className='flex justify-between items-center'>
-          <h3 className='bg-red-600 text-sm px-3 py-1 rounded'>High</h3>
-          <h4 className='text-sm'>20 feb 2024</h4>
-        </div>
-        <h2 className='mt-5 text-2xl font-semibold'>Make a yt vdo</h2>
-        <p className='text-sm mt-3'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea, sit.</p>
-
-      </div>
-      <div className='shrink-0 h-full w-[300px] p-5 bg-yellow-400 rounded-xl'>
-        <div className='flex justify-between items-center'>
-          <h3 className='bg-red-600 text-sm px-3 py-1 rounded'>High</h3>
-          <h4 className='text-sm'>20 feb 2024</h4>
-        </div>
-        <h2 className='mt-5 text-2xl font-semibold'>Make a yt vdo</h2>
-        <p className='text-sm mt-3'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea, sit.</p>
-
-      </div>
-      <div className='shrink-0 h-full w-[300px] p-5 bg-yellow-400 rounded-xl'>
-        <div className='flex justify-between items-center'>
-          <h3 className='bg-red-600 text-sm px-3 py-1 rounded'>High</h3>
-          <h4 className='text-sm'>20 feb 2024</h4>
-        </div>
-        <h2 className='mt-5 text-2xl font-semibold'>Make a yt vdo</h2>
-        <p className='text-sm mt-3'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea, sit.</p>
-
-      </div>
+      {data.tasks.map((elem, idx) => {
+        if(elem.active){
+          return <AcceptTask key={idx} />
+        }
+        if (elem.newTask){
+          return <NewTask key={idx} />
+        }
+        if(elem.completed){
+          return <CompleteTask key={idx} />
+        }
+        if(elem.failed){
+          return <FailedTask key={idx} />
+        }
+      })}
     </div>
   )
 }

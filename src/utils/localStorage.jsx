@@ -1,8 +1,18 @@
+// localStorage.clear()
 const employees = [
     {
         id: 1,
-        email: "employee1@example.com",
+        firstName: "Aarav",
+        email: "e@e.com",
         password: "123",
+
+        taskNumbers: {
+            active: 2,
+            newTask: 1,
+            completed: 2,
+            failed: 1
+        },
+
         tasks: [
             {
                 active: true,
@@ -59,8 +69,17 @@ const employees = [
 
     {
         id: 2,
+        firstName: "Vivaan",
         email: "employee2@example.com",
         password: "123",
+
+        taskNumbers: {
+            active: 2,
+            newTask: 1,
+            completed: 2,
+            failed: 0
+        },
+
         tasks: [
             {
                 active: true,
@@ -107,8 +126,17 @@ const employees = [
 
     {
         id: 3,
+        firstName: "Aditya",
         email: "employee3@example.com",
         password: "123",
+
+        taskNumbers: {
+            active: 2,
+            newTask: 1,
+            completed: 3,
+            failed: 1
+        },
+
         tasks: [
             {
                 active: true,
@@ -175,8 +203,17 @@ const employees = [
 
     {
         id: 4,
+        firstName: "Ishaan",
         email: "employee4@example.com",
         password: "123",
+
+        taskNumbers: {
+            active: 2,
+            newTask: 1,
+            completed: 1,
+            failed: 0
+        },
+
         tasks: [
             {
                 active: true,
@@ -213,8 +250,17 @@ const employees = [
 
     {
         id: 5,
+        firstName: "Arjun",
         email: "employee5@example.com",
         password: "123",
+
+        taskNumbers: {
+            active: 2,
+            newTask: 1,
+            completed: 4,
+            failed: 1
+        },
+
         tasks: [
             {
                 active: true,
@@ -290,10 +336,12 @@ const employees = [
     }
 ];
 
+
 const admin = [
     {
         id: 6,
-        email: "admin@example.com",
+        firstName: "Rajesh",
+        email: "admin@me.com",
         password: "123"
     }
 ];
