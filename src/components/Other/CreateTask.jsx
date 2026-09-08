@@ -19,14 +19,15 @@ const CreateTask = () => {
 
         setNewTask({ taskTitle, taskDescription, taskDate, category, active: false, newTask: true, failed: false, completed: false })
 
-        const data = userData.employees
+        const data = userData
 
-        data.forEach(function (elem) {
+        userData.forEach(function (elem) {
             if (asignTo == elem.firstName) {
                 elem.tasks.push(newTask)
                 elem.taskNumbers.newTask = elem.taskCounts.newTask + 1
             }
         })
+        setUserData(data)
 
         setTaskDate("")
         setAsignTo('')
