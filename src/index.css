@@ -1,12 +1,70 @@
 @import "tailwindcss";
 
-*{
-    color: #fff;
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #49225B;
+    background: #F5EBFA;
+    color-scheme: light;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-body{
-    background-color: #111;
+:root.dark {
+    color: #F5EBFA;
+    background: #180D21;
+    color-scheme: dark;
 }
-#tasklist::-webkit-scrollbar{
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-width: 320px;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background: #F5EBFA;
+}
+
+:root.dark body {
+    background: #180D21;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: default;
+}
+
+#root {
+    min-height: 100vh;
+}
+
+#tasklist::-webkit-scrollbar,
+.hide-scrollbar::-webkit-scrollbar {
     display: none;
+}
+
+#tasklist,
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

@@ -6,7 +6,7 @@ const employees = [
         password: "123",
 
         taskNumbers: {
-            active: 2,
+            active: 1,
             newTask: 1,
             completed: 2,
             failed: 1
@@ -14,7 +14,7 @@ const employees = [
 
         tasks: [
             {
-                active: true,
+                active: false,
                 newTask: true,
                 completed: false,
                 failed: false,
@@ -68,12 +68,12 @@ const employees = [
 
     {
         id: 2,
-        firstName: "V",
+        firstName: "Vivan",
         email: "e2@e.com",
         password: "123",
 
         taskNumbers: {
-            active: 2,
+            active: 1,
             newTask: 1,
             completed: 2,
             failed: 0
@@ -81,7 +81,7 @@ const employees = [
 
         tasks: [
             {
-                active: true,
+                active: false,
                 newTask: true,
                 completed: false,
                 failed: false,
@@ -130,7 +130,7 @@ const employees = [
         password: "123",
 
         taskNumbers: {
-            active: 2,
+            active: 1,
             newTask: 1,
             completed: 3,
             failed: 1
@@ -138,7 +138,7 @@ const employees = [
 
         tasks: [
             {
-                active: true,
+                active: false,
                 newTask: true,
                 completed: false,
                 failed: false,
@@ -207,7 +207,7 @@ const employees = [
         password: "123",
 
         taskNumbers: {
-            active: 2,
+            active: 1,
             newTask: 1,
             completed: 1,
             failed: 0
@@ -215,7 +215,7 @@ const employees = [
 
         tasks: [
             {
-                active: true,
+                active: false,
                 newTask: true,
                 completed: false,
                 failed: false,
@@ -254,7 +254,7 @@ const employees = [
         password: "123",
 
         taskNumbers: {
-            active: 2,
+            active: 1,
             newTask: 1,
             completed: 4,
             failed: 1
@@ -262,7 +262,7 @@ const employees = [
 
         tasks: [
             {
-                active: true,
+                active: false,
                 newTask: true,
                 completed: false,
                 failed: false,
@@ -346,13 +346,25 @@ const admin = [
 ];
 
 export const setLocalStorage = () => {
-    localStorage.setItem('employees', JSON.stringify(employees))
-    localStorage.setItem('admin', JSON.stringify(admin))
+    if (!localStorage.getItem('employees')) {
+        localStorage.setItem('employees', JSON.stringify(employees))
+    }
+
+    if (!localStorage.getItem('admin')) {
+        localStorage.setItem('admin', JSON.stringify(admin))
+    }
+}
+
+export const saveEmployees = (updatedEmployees) => {
+    localStorage.setItem('employees', JSON.stringify(updatedEmployees))
 }
 
 export const getLocalStorage = () => {
-    const employees = JSON.parse(localStorage.getItem('employees'))
-    const admin = JSON.parse(localStorage.getItem('admin'))
+    const storedEmployees = localStorage.getItem('employees')
+    const storedAdmin = localStorage.getItem('admin')
 
-    return {employees, admin}
+    return {
+        employees: storedEmployees ? JSON.parse(storedEmployees) : employees,
+        admin: storedAdmin ? JSON.parse(storedAdmin) : admin,
+    }
 }

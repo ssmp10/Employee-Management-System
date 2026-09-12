@@ -1,25 +1,20 @@
-import React from 'react'
-
 const TaskListNumber = ({ data }) => {
+    const stats = [
+        { label: 'New Tasks', value: data.taskNumbers.newTask },
+        { label: 'Completed', value: data.taskNumbers.completed },
+        { label: 'Accepted', value: data.taskNumbers.active },
+        { label: 'Failed', value: data.taskNumbers.failed },
+    ]
+
     return (
-        <div className='flex flex-nowrap justify-start mt-10 w-full overflow-x-auto items-center gap-5'>
-            <div className='p-5 py-5 rounded-xl w-[45%] bg-red-400'>
-                <h2 className='text-3xl font-semibold'>{data.taskNumbers.newTask}</h2>
-                <h3 className='text-xl font-medium'>New Task</h3>
-            </div>
-            <div className='p-5 py-5 rounded-xl w-[45%] bg-blue-400'>
-                <h2 className='text-3xl font-semibold'>{data.taskNumbers.completed}</h2>
-                <h3 className='text-xl font-medium'>Completed Task</h3>
-            </div>
-            <div className='p-5 py-5 rounded-xl w-[45%] bg-green-400'>
-                <h2 className='text-3xl font-semibold'>{data.taskNumbers.active}</h2>
-                <h3 className='text-xl font-medium'>Accepted Task</h3>
-            </div>
-            <div className='p-5 py-5 rounded-xl w-[45%] bg-yellow-400'>
-                <h2 className='text-3xl font-semibold'>{data.taskNumbers.failed}</h2>
-                <h3 className='text-xl font-medium'>Failed Task</h3>
-            </div>
-        </div>
+        <section className='grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4'>
+            {stats.map((stat) => (
+                <article key={stat.label} className='rounded-lg border border-[#E7DBEF] bg-white/85 p-5 shadow-sm shadow-[#49225B]/10 dark:border-[#A56ABD]/25 dark:bg-[#2B1536]/95'>
+                    <h2 className='text-4xl font-bold text-[#49225B] dark:text-[#F5EBFA]'>{stat.value}</h2>
+                    <p className='mt-2 text-sm font-semibold text-[#6E3482] dark:text-[#E7DBEF]'>{stat.label}</p>
+                </article>
+            ))}
+        </section>
     )
 }
 

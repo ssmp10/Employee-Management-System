@@ -1,34 +1,51 @@
-import React, { useContext } from 'react'
-import { AuthContext } from '../../context/AuthProvider'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 
 const AllTask = () => {
 
-   const [userData,setUserData] =  useContext(AuthContext)
+   const [userData] = useContext(AuthContext)
+   const employees = userData ?? []
 
    
   return (
-    <div className='bg-[#1c1c1c] p-5 rounded mt-5'>
-        <div className='bg-red-400 mb-2 py-2 px-4 flex justify-between rounded'>
-            <h2 className='text-lg font-medium w-1/5'>Employee Name</h2>
-            <h3 className='text-lg font-medium w-1/5'>New Task</h3>
-            <h5 className='text-lg font-medium w-1/5'>Active Task</h5>
-            <h5 className='text-lg font-medium w-1/5'>Completed</h5>
-            <h5 className='text-lg font-medium w-1/5'>Failed</h5>
+    <section className='rounded-lg border border-[#E7DBEF] bg-white/85 p-5 shadow-sm shadow-[#49225B]/10 dark:border-[#A56ABD]/25 dark:bg-[#2B1536]/95 sm:p-6'>
+        <div className='mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between'>
+            <div>
+                <h2 className='text-xl font-bold text-[#49225B] dark:text-[#F5EBFA]'>Employee Task Summary</h2>
+                <p className='text-sm text-[#6E3482] dark:text-[#E7DBEF]'>Live counts from local storage.</p>
+            </div>
         </div>
-        <div className=''>
-        {userData.map(function(elem,idx){
-            return <div key={idx} className='border-2 border-emerald-500 mb-2 py-2 px-4 flex justify-between rounded'>
-            <h2 className='text-lg font-medium  w-1/5'>{elem.firstName}</h2>
-            <h3 className='text-lg font-medium w-1/5 text-blue-400'>{elem.taskNumbers.newTask}</h3>
-            <h5 className='text-lg font-medium w-1/5 text-yellow-400'>{elem.taskNumbers.active}</h5>
-            <h5 className='text-lg font-medium w-1/5 text-white'>{elem.taskNumbers.completed}</h5>
-            <h5 className='text-lg font-medium w-1/5 text-red-600'>{elem.taskNumbers.failed}</h5>
+
+        <div className='hide-scrollbar overflow-x-auto'>
+            <div className='min-w-[720px]'>
+                <div className='grid grid-cols-5 rounded-lg bg-[#6E3482] px-4 py-3 text-sm font-semibold text-[#F5EBFA]'>
+                    <h3>Employee Name</h3>
+                    <h3>New Task</h3>
+                    <h3>Active Task</h3>
+                    <h3>Completed</h3>
+                    <h3>Failed</h3>
+                </div>
+
+                <div className='mt-3 space-y-2'>
+                    {employees.map((elem) => (
+                        <div key={elem.id} className='grid grid-cols-5 rounded-lg border border-[#E7DBEF] bg-[#F5EBFA]/65 px-4 py-3 text-sm font-semibold text-[#49225B] dark:border-[#A56ABD]/25 dark:bg-[#49225B]/45 dark:text-[#F5EBFA]'>
+                            <h3>{elem.firstName}</h3>
+                            <p className='text-[#6E3482] dark:text-[#E7DBEF]'>{elem.taskNumbers.newTask}</p>
+                            <p className='text-[#6E3482] dark:text-[#E7DBEF]'>{elem.taskNumbers.active}</p>
+                            <p className='text-[#49225B] dark:text-[#F5EBFA]'>{elem.taskNumbers.completed}</p>
+                            <p className='text-[#A56ABD] dark:text-[#E7DBEF]'>{elem.taskNumbers.failed}</p>
+                        </div>
+                    ))}
+
+                    {!employees.length && (
+                        <div className='rounded-lg border border-[#E7DBEF] bg-[#F5EBFA]/65 px-4 py-6 text-sm font-semibold text-[#6E3482] dark:border-[#A56ABD]/25 dark:bg-[#49225B]/45 dark:text-[#E7DBEF]'>
+                            No employee data found.
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
-        })}
-        </div>
-        
-        
-    </div>
+    </section>
   )
 }
 

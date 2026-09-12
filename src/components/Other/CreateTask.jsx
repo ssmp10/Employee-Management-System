@@ -1,101 +1,153 @@
-import React, { useContext, useState } from 'react'
-import { AuthContext } from '../../context/AuthProvider'
+import { useContext, useState } from 'react'
+import { AuthContext } from '../../context/AuthContext'
+import { saveEmployees } from '../../utils/localStorage'
 
 const CreateTask = () => {
 
     const [userData, setUserData] = useContext(AuthContext)
+    const employees = userData ?? []
 
     const [taskTitle, setTaskTitle] = useState('')
     const [taskDescription, setTaskDescription] = useState('')
     const [taskDate, setTaskDate] = useState('')
-    const [asignTo, setAsignTo] = useState('')
+    const [assignTo, setAssignTo] = useState('')
     const [category, setCategory] = useState('')
-
-    const [newTask, setNewTask] = useState({})
 
     const submitHandler = (e) => {
         e.preventDefault()
 
-        setNewTask({ taskTitle, taskDescription, taskDate, category, active: false, newTask: true, failed: false, completed: false })
+        const task = {
+            taskTitle,
+            taskDescription,
+            taskDate,
+            category,
+            active: false,
+            newTask: true,
+            failed: false,
+            completed: false,
+        }
 
-        const data = userData
+        const assigneeId = Number(assignTo)
+        let taskWasAssigned = false
 
-        data.forEach(function (elem) {
-            if (asignTo == elem.firstName) {
-                elem.tasks.push(newTask)
-                elem.taskNumbers.newTask = elem.taskNumbers.newTask + 1
+        const updatedEmployees = employees.map((employee) => {
+            if (employee.id === assigneeId) {
+                taskWasAssigned = true
+                return {
+                    ...employee,
+                    taskNumbers: {
+                        ...employee.taskNumbers,
+                        newTask: employee.taskNumbers.newTask + 1,
+                    },
+                    tasks: [...employee.tasks, task],
+                }
             }
+
+            return employee
         })
-        setUserData(data)
-        console.log(data);
+
+        if (!taskWasAssigned) {
+            alert('Please choose an employee for this task')
+            return
+        }
+
+        setUserData(updatedEmployees)
+        saveEmployees(updatedEmployees)
 
         setTaskTitle('')
         setCategory('')
-        setAsignTo('')
+        setAssignTo('')
         setTaskDate('')
         setTaskDescription('')
 
     }
 
     return (
-        <div className='p-5 bg-[#1c1c1c] mt-5 rounded'>
-            <form onSubmit={(e) => {
-                submitHandler(e)
-            }}
-                className='flex flex-wrap w-full items-start justify-between'
+        <section className='rounded-lg border border-[#E7DBEF] bg-white/85 p-5 shadow-sm shadow-[#49225B]/10 dark:border-[#A56ABD]/25 dark:bg-[#2B1536]/95 sm:p-6'>
+            <div className='mb-5'>
+                <h2 className='text-xl font-bold text-[#49225B] dark:text-[#F5EBFA]'>Create Task</h2>
+                <p className='mt-1 text-sm text-[#6E3482] dark:text-[#E7DBEF]'>Assign focused work to an employee.</p>
+            </div>
+
+            <form onSubmit={submitHandler}
+                className='grid w-full gap-5 lg:grid-cols-[1fr_0.9fr]'
             >
-                <div className='w-1/2'>
+                <div className='grid gap-4 sm:grid-cols-2'>
                     <div>
-                        <h3 className='text-sm text-gray-300 mb-0.5'>Task Title</h3>
+                        <label className='text-sm font-semibold text-[#49225B] dark:text-[#E7DBEF]' htmlFor='taskTitle'>Task Title</label>
                         <input
+                            id='taskTitle'
                             value={taskTitle}
                             onChange={(e) => {
                                 setTaskTitle(e.target.value)
                             }}
-                            className='text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-400 mb-4' 
+                            required
+                            className='mt-2 w-full rounded-lg border border-[#A56ABD]/45 bg-[#F5EBFA]/75 px-4 py-3 text-sm text-[#49225B] outline-none transition placeholder:text-[#6E3482]/50 focus:border-[#6E3482] focus:ring-2 focus:ring-[#A56ABD]/30 dark:border-[#A56ABD]/35 dark:bg-[#49225B]/45 dark:text-[#F5EBFA] dark:placeholder:text-[#E7DBEF]/60'
                             type="text" placeholder='Task Title'
                         />
                     </div>
                     <div>
-                        <h3 className='text-sm text-gray-300 mb-0.5'>Date</h3>
+                        <label className='text-sm font-semibold text-[#49225B] dark:text-[#E7DBEF]' htmlFor='taskDate'>Date</label>
                         <input
+                            id='taskDate'
                             value={taskDate}
                             onChange={(e) => {
                                 setTaskDate(e.target.value)
                             }}
-                            className='text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-400 mb-4' type="date" />
+                            required
+                            className='mt-2 w-full rounded-lg border border-[#A56ABD]/45 bg-[#F5EBFA]/75 px-4 py-3 text-sm text-[#49225B] outline-none transition focus:border-[#6E3482] focus:ring-2 focus:ring-[#A56ABD]/30 dark:border-[#A56ABD]/35 dark:bg-[#49225B]/45 dark:text-[#F5EBFA]'
+                            type="date"
+                        />
                     </div>
                     <div>
-                        <h3 className='text-sm text-gray-300 mb-0.5'>Asign to</h3>
-                        <input
-                            value={asignTo}
+                        <label className='text-sm font-semibold text-[#49225B] dark:text-[#E7DBEF]' htmlFor='assignTo'>Assign to</label>
+                        <select
+                            id='assignTo'
+                            value={assignTo}
                             onChange={(e) => {
-                                setAsignTo(e.target.value)
+                                setAssignTo(e.target.value)
                             }}
-                            className='text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-400 mb-4' type="text" placeholder='employee name' />
+                            required
+                            className='mt-2 w-full rounded-lg border border-[#A56ABD]/45 bg-[#F5EBFA]/75 px-4 py-3 text-sm text-[#49225B] outline-none transition focus:border-[#6E3482] focus:ring-2 focus:ring-[#A56ABD]/30 dark:border-[#A56ABD]/35 dark:bg-[#49225B]/45 dark:text-[#F5EBFA]'
+                        >
+                            <option value=''>Select employee</option>
+                            {employees.map((employee) => (
+                                <option key={employee.id} value={employee.id}>{employee.firstName}</option>
+                            ))}
+                        </select>
                     </div>
                     <div>
-                        <h3 className='text-sm text-gray-300 mb-0.5'>Category</h3>
+                        <label className='text-sm font-semibold text-[#49225B] dark:text-[#E7DBEF]' htmlFor='category'>Category</label>
                         <input
+                            id='category'
                             value={category}
                             onChange={(e) => {
                                 setCategory(e.target.value)
                             }}
-                            className='text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-400 mb-4' type="text" placeholder='design, dev, etc' />
+                            required
+                            className='mt-2 w-full rounded-lg border border-[#A56ABD]/45 bg-[#F5EBFA]/75 px-4 py-3 text-sm text-[#49225B] outline-none transition placeholder:text-[#6E3482]/50 focus:border-[#6E3482] focus:ring-2 focus:ring-[#A56ABD]/30 dark:border-[#A56ABD]/35 dark:bg-[#49225B]/45 dark:text-[#F5EBFA] dark:placeholder:text-[#E7DBEF]/60'
+                            type="text"
+                            placeholder='Design, Dev, etc'
+                        />
                     </div>
                 </div>
 
-                <div className='w-2/5 flex flex-col items-start'>
-                    <h3 className='text-sm text-gray-300 mb-0.5'>Description</h3>
-                    <textarea value={taskDescription}
+                <div className='flex flex-col'>
+                    <label className='text-sm font-semibold text-[#49225B] dark:text-[#E7DBEF]' htmlFor='taskDescription'>Description</label>
+                    <textarea
+                        id='taskDescription'
+                        value={taskDescription}
                         onChange={(e) => {
                             setTaskDescription(e.target.value)
-                        }} className='w-full h-44 text-sm py-2 px-4 rounded outline-none bg-transparent border-[1px] border-gray-400' name="" id=""></textarea>
-                    <button className='bg-emerald-500 py-3 hover:bg-emerald-600 px-5 rounded text-sm mt-4 w-full'>Create Task</button>
+                        }}
+                        required
+                        className='mt-2 min-h-40 w-full rounded-lg border border-[#A56ABD]/45 bg-[#F5EBFA]/75 px-4 py-3 text-sm text-[#49225B] outline-none transition placeholder:text-[#6E3482]/50 focus:border-[#6E3482] focus:ring-2 focus:ring-[#A56ABD]/30 dark:border-[#A56ABD]/35 dark:bg-[#49225B]/45 dark:text-[#F5EBFA] dark:placeholder:text-[#E7DBEF]/60'
+                    />
+                    <button className='mt-4 min-h-11 w-full rounded-lg bg-[#6E3482] px-5 py-3 text-sm font-semibold text-[#F5EBFA] shadow-lg shadow-[#49225B]/15 transition hover:bg-[#49225B] focus:outline-none focus:ring-2 focus:ring-[#A56ABD]/40 dark:bg-[#A56ABD] dark:text-[#180D21] dark:hover:bg-[#E7DBEF]'>Create Task</button>
                 </div>
 
             </form>
-        </div>
+        </section>
     )
 }
 

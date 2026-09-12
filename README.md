@@ -10,15 +10,18 @@ A frontend-only employee and task management dashboard built with **React**, **V
 
 ### Login
 
-![Login Page](./screenshots/Login_page.png)
+![Login Page Light](./screenshots/login_light.png)
+![Login Page Dark](./screenshots/login_dark.png)
 
 ### Admin Dashboard
 
-![Admin Dashboard](./screenshots/admin_page.png)
+![Admin Dashboard Light](./screenshots/admin_light.png)
+![Admin Dashboard Dark](./screenshots/admin_dark.png)
 
 ### Employee Dashboard
 
-![Employee Dashboard](./screenshots/employee_page.png)
+![Employee Dashboard Light](./screenshots/emp_light.png)
+![Employee Dashboard Light](./screenshots/emp_dark.png)
 
 ## Features
 
